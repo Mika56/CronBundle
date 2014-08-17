@@ -1,10 +1,10 @@
 <?php
-namespace ColourStream\Bundle\CronBundle\Entity;
+namespace ColourStream\Bundle\CronBundle\Document;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @ORM\Entity(repositoryClass="ColourStream\Bundle\CronBundle\Entity\CronJobResultRepository")
+ * @MongoDB\Document(repositoryClass="ColourStream\Bundle\CronBundle\Document\Repository\CronJobResultRepository")
  */
 class CronJobResult
 {
@@ -15,37 +15,35 @@ class CronJobResult
     const RESULT_MAX = 2;
     
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @MongoDB\Id
      * @var integer $id
      */
     protected $id;
     
     /**
-     * @ORM\Column(type="datetime")
-     * @var DateTime $runAt
+     * @MongoDB\Date
+     * @var \DateTime $runAt
      */
     protected $runAt;
     /**
-     * @ORM\Column(type="float")
+     * @MongoDB\Float
      * @var float $runTime
      */
     protected $runTime;
     
     /**
-     * @ORM\Column(type="integer")
+     * @MongoDB\Int
      * @var integer $result
      */
     protected $result;
     /**
-     * @ORM\Column(type="text")
+     * @MongoDB\String
      * @var string $output
      */
     protected $output;
     
     /**
-     * @ORM\ManyToOne(targetEntity="CronJob", inversedBy="results")
+     * @MongoDB\ReferenceOne(targetDocument="CronJob", simple=true, inversedBy="results")
      * @var CronJob
      */
     protected $job;
@@ -68,9 +66,9 @@ class CronJobResult
     /**
      * Set runAt
      *
-     * @param datetime $runAt
+     * @param \DateTime $runAt
      */
-    public function setRunAt($runAt)
+    public function setRunAt(\DateTime $runAt)
     {
         $this->runAt = $runAt;
     }
@@ -78,7 +76,7 @@ class CronJobResult
     /**
      * Get runAt
      *
-     * @return datetime 
+     * @return \DateTime
      */
     public function getRunAt()
     {
@@ -148,9 +146,9 @@ class CronJobResult
     /**
      * Set job
      *
-     * @param ColourStream\Bundle\CronBundle\Entity\CronJob $job
+     * @param CronJob $job
      */
-    public function setJob(\ColourStream\Bundle\CronBundle\Entity\CronJob $job)
+    public function setJob(CronJob $job)
     {
         $this->job = $job;
     }
@@ -158,7 +156,7 @@ class CronJobResult
     /**
      * Get job
      *
-     * @return ColourStream\Bundle\CronBundle\Entity\CronJob 
+     * @return CronJob
      */
     public function getJob()
     {

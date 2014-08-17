@@ -1,10 +1,13 @@
 # ColourStream Cron Bundle
 
 This bundle provides a simple interface for registering repeated scheduled
-tasks within your application, including support for installs where the host
-does not allow for command-line access (TODO).
+tasks within your application.
 
-This bundle is tested only against Symfony 2.1. It will likely work with Symfony 2.0, but YMMV
+This bundle is tested only against Symfony 2.5.
+
+## Requirements ##
+
+This bundle was made for Doctrine ODM. For Doctrine ORM, see [cordoval/CronBundle](https://github.com/cordoval/CronBundle)
 
 ## Installation
 
@@ -18,13 +21,19 @@ Installing this bundle can be done through these simple steps:
     require: {
         // ...
         "colourstream/cron-bundle": "dev-master"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Mika56/CronBundle.git"
+        }
+    ]
 }
 ```
 
 2. Update your composer installation:
 ```shell
-composer update
+composer update colourstream/cron-bundle
 ````
 
 3. Add the bundle to your application kernel:
@@ -45,7 +54,7 @@ public function registerBundles()
 
 4. Update your DB schema
 ```shell
-app/console doctrine:schema:update
+app/console doctrine:mongodb:schema:update
 ```
 
 4. Start using the bundle:

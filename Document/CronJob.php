@@ -1,61 +1,61 @@
 <?php
-namespace ColourStream\Bundle\CronBundle\Entity;
+namespace ColourStream\Bundle\CronBundle\Document;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
- * @ORM\Entity(repositoryClass="ColourStream\Bundle\CronBundle\Entity\CronJobRepository")
+ * @MongoDB\Document(repositoryClass="ColourStream\Bundle\CronBundle\Document\Repository\CronJobRepository")
  */
 class CronJob
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @MongoDB\Id
      * @var integer $id
      */
     protected $id;
     
     /**
-     * @ORM\Column
      * @var string $command
+     * @MongoDB\String
      */
     protected $command;
     /**
-     * @ORM\Column
      * @var string $description
+     * @MongoDB\String
      */
     protected $description;
     
     /**
-     * @ORM\Column(name="job_interval", type="string", length=40)
      * @var string $interval
+     * @MongoDB\String
      */
     protected $interval;
     /**
-     * @ORM\Column(type="datetime")
-     * @var DateTime $nextRun
+     * @MongoDB\Date
+     * @var \DateTime $nextRun
      */
     protected $nextRun;
     /**
-     * @ORM\Column(type="boolean")
+     * @MongoDB\Boolean
      * @var boolean $enabled
      */
     protected $enabled;
     
     /**
-     * @ORM\OneToMany(targetEntity="CronJobResult", mappedBy="job", cascade={"remove"})
+     * @MongoDB\ReferenceMany(targetDocument="CronJobResult", mappedBy="job", simple=true, cascade={"remove"})
      * @var ArrayCollection
      */
     protected $results;
     /**
-     * @ORM\OneToOne(targetEntity="CronJobResult")
+     * @MongoDB\ReferenceOne(targetDocument="CronJobResult", simple=true)
      * @var CronJobResult
      */
     protected $mostRecentRun;
     public function __construct()
     {
-        $this->results = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->results = new ArrayCollection();
     }
     
     /**
@@ -131,9 +131,9 @@ class CronJob
     /**
      * Set nextRun
      *
-     * @param datetime $nextRun
+     * @param \DateTime $nextRun
      */
-    public function setNextRun($nextRun)
+    public function setNextRun(\DateTime $nextRun)
     {
         $this->nextRun = $nextRun;
     }
@@ -141,7 +141,7 @@ class CronJob
     /**
      * Get nextRun
      *
-     * @return datetime 
+     * @return \DateTime
      */
     public function getNextRun()
     {
@@ -151,9 +151,9 @@ class CronJob
     /**
      * Add results
      *
-     * @param ColourStream\Bundle\CronBundle\Entity\CronJobResult $results
+     * @param CronJobResult $results
      */
-    public function addCronJobResult(\ColourStream\Bundle\CronBundle\Entity\CronJobResult $results)
+    public function addCronJobResult(CronJobResult $results)
     {
         $this->results[] = $results;
     }
@@ -161,7 +161,7 @@ class CronJob
     /**
      * Get results
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getResults()
     {
@@ -171,9 +171,9 @@ class CronJob
     /**
      * Set mostRecentRun
      *
-     * @param ColourStream\Bundle\CronBundle\Entity\CronJobResult $mostRecentRun
+     * @param CronJobResult $mostRecentRun
      */
-    public function setMostRecentRun(\ColourStream\Bundle\CronBundle\Entity\CronJobResult $mostRecentRun)
+    public function setMostRecentRun(CronJobResult $mostRecentRun)
     {
         $this->mostRecentRun = $mostRecentRun;
     }
@@ -181,7 +181,7 @@ class CronJob
     /**
      * Get mostRecentRun
      *
-     * @return ColourStream\Bundle\CronBundle\Entity\CronJobResult 
+     * @return CronJobResult
      */
     public function getMostRecentRun()
     {

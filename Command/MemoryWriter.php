@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\Output;
  * MemoryWriter implements OutputInterface, writing to an internal buffer
  */
 class MemoryWriter extends Output {
-    protected $backingStore = "";
+    protected $backingStore = '';
     
     public function __construct($verbosity = self::VERBOSITY_NORMAL) {
         parent::__construct($verbosity);
@@ -25,6 +25,6 @@ class MemoryWriter extends Output {
     }
     
     public function clear() {
-        $this->backingStore = "";
+        $this->backingStore = '';
     }
 }
